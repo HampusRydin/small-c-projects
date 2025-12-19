@@ -7,6 +7,17 @@
 #define MAX_PHONE 20
 #define CONTACTS_FILE "contacts.txt"
 
+// ANSI color codes
+#define COLOR_RESET   "\033[0m"
+#define COLOR_RED     "\033[31m"
+#define COLOR_GREEN   "\033[32m"
+#define COLOR_YELLOW  "\033[33m"
+#define COLOR_BLUE     "\033[34m"
+#define COLOR_MAGENTA "\033[35m"
+#define COLOR_CYAN    "\033[36m"
+#define COLOR_WHITE   "\033[37m"
+#define COLOR_BOLD    "\033[1m"
+
 typedef struct Contact {
     char name[MAX_NAME];
     char email[MAX_EMAIL];
@@ -27,7 +38,7 @@ void trim_newline(char *s) {
 Contact* create_contact(const char *name, const char *email, const char *phone) {
     Contact *new_contact = (Contact*)malloc(sizeof(Contact));
     if (!new_contact) {
-        printf("Error: Memory allocation failed.\n");
+        printf("%sError:%s Memory allocation failed.\n", COLOR_RED COLOR_BOLD, COLOR_RESET);
         return NULL;
     }
 
@@ -58,7 +69,7 @@ void add_contact(const char *name, const char *email, const char *phone) {
         current->next = new_contact;
     }
     contact_count++;
-    printf("Contact added successfully.\n");
+    printf("%s✓ Contact added successfully.%s\n", COLOR_GREEN COLOR_BOLD, COLOR_RESET);
 }
 
 void load_contacts() {
@@ -87,6 +98,7 @@ void load_contacts() {
 void save_contacts() {
     FILE *f = fopen(CONTACTS_FILE, "w");
     if (!f) {
+        printf("%sError:%s ", COLOR_RED COLOR_BOLD, COLOR_RESET);
         perror("Failed to open contacts file for writing");
         return;
     }
@@ -102,17 +114,17 @@ void save_contacts() {
 
 void list_contacts() {
     if (head == NULL) {
-        printf("No contacts found.\n");
+        printf("%sNo contacts found.%s\n", COLOR_YELLOW, COLOR_RESET);
         return;
     }
 
-    printf("\n--- Contact List ---\n");
+    printf("\n%s%s--- Contact List ---%s\n", COLOR_BOLD, COLOR_CYAN, COLOR_RESET);
     Contact *current = head;
     int index = 1;
     while (current != NULL) {
-        printf("%d. %s\n", index, current->name);
-        printf("   Email: %s\n", current->email);
-        printf("   Phone: %s\n\n", current->phone);
+        printf("%s%d.%s %s%s%s\n", COLOR_BOLD, index, COLOR_RESET, COLOR_YELLOW COLOR_BOLD, current->name, COLOR_RESET);
+        printf("   %sEmail:%s %s\n", COLOR_CYAN, COLOR_RESET, current->email);
+        printf("   %sPhone:%s %s\n\n", COLOR_CYAN, COLOR_RESET, current->phone);
         current = current->next;
         index++;
     }
@@ -132,11 +144,11 @@ Contact* find_contact_by_index(int index) {
 
 void search_contacts(const char *query) {
     if (head == NULL) {
-        printf("No contacts found.\n");
+        printf("%sNo contacts found.%s\n", COLOR_YELLOW, COLOR_RESET);
         return;
     }
 
-    printf("\n--- Search Results ---\n");
+    printf("\n%s%s--- Search Results ---%s\n", COLOR_BOLD, COLOR_CYAN, COLOR_RESET);
     Contact *current = head;
     int index = 1;
     int found = 0;
@@ -145,9 +157,9 @@ void search_contacts(const char *query) {
         if (strstr(current->name, query) != NULL ||
             strstr(current->email, query) != NULL ||
             strstr(current->phone, query) != NULL) {
-            printf("%d. %s\n", index, current->name);
-            printf("   Email: %s\n", current->email);
-            printf("   Phone: %s\n\n", current->phone);
+            printf("%s%d.%s %s%s%s\n", COLOR_BOLD, index, COLOR_RESET, COLOR_YELLOW COLOR_BOLD, current->name, COLOR_RESET);
+            printf("   %sEmail:%s %s\n", COLOR_CYAN, COLOR_RESET, current->email);
+            printf("   %sPhone:%s %s\n\n", COLOR_CYAN, COLOR_RESET, current->phone);
             found = 1;
         }
         current = current->next;
@@ -155,14 +167,14 @@ void search_contacts(const char *query) {
     }
 
     if (!found) {
-        printf("No contacts found matching '%s'.\n", query);
+        printf("%sNo contacts found matching '%s'.%s\n", COLOR_YELLOW, query, COLOR_RESET);
     }
 }
 
 void update_contact(int index, const char *name, const char *email, const char *phone) {
     Contact *contact = find_contact_by_index(index);
     if (!contact) {
-        printf("Invalid contact number.\n");
+        printf("%sError:%s Invalid contact number.\n", COLOR_RED COLOR_BOLD, COLOR_RESET);
         return;
     }
 
@@ -179,12 +191,12 @@ void update_contact(int index, const char *name, const char *email, const char *
         contact->phone[MAX_PHONE - 1] = '\0';
     }
 
-    printf("Contact updated successfully.\n");
+    printf("%s✓ Contact updated successfully.%s\n", COLOR_GREEN COLOR_BOLD, COLOR_RESET);
 }
 
 void delete_contact(int index) {
     if (index < 1 || index > contact_count) {
-        printf("Invalid contact number.\n");
+        printf("%sError:%s Invalid contact number.\n", COLOR_RED COLOR_BOLD, COLOR_RESET);
         return;
     }
 
@@ -201,7 +213,7 @@ void delete_contact(int index) {
         current->next = to_delete->next;
     }
 
-    printf("Deleted: %s\n", to_delete->name);
+    printf("%s✓ Deleted:%s %s%s%s\n", COLOR_GREEN COLOR_BOLD, COLOR_RESET, COLOR_YELLOW, to_delete->name, COLOR_RESET);
     free(to_delete);
     contact_count--;
 }
@@ -218,12 +230,12 @@ void free_contacts() {
 }
 
 void print_usage(const char *progname) {
-    printf("Usage:\n");
-    printf("  %s list                           - List all contacts\n", progname);
-    printf("  %s add \"name\" \"email\" \"phone\"   - Add a new contact\n", progname);
-    printf("  %s search \"query\"                 - Search contacts by name, email, or phone\n", progname);
-    printf("  %s update INDEX \"name\" \"email\" \"phone\" - Update a contact (use \"\" to skip a field)\n", progname);
-    printf("  %s delete INDEX                   - Delete a contact\n", progname);
+    printf("%sUsage:%s\n", COLOR_BOLD COLOR_CYAN, COLOR_RESET);
+    printf("  %s%s list%s                           - List all contacts\n", COLOR_YELLOW, progname, COLOR_RESET);
+    printf("  %s%s add \"name\" \"email\" \"phone\"%s   - Add a new contact\n", COLOR_YELLOW, progname, COLOR_RESET);
+    printf("  %s%s search \"query\"%s                 - Search contacts by name, email, or phone\n", COLOR_YELLOW, progname, COLOR_RESET);
+    printf("  %s%s update INDEX \"name\" \"email\" \"phone\"%s - Update a contact (use \"\" to skip a field)\n", COLOR_YELLOW, progname, COLOR_RESET);
+    printf("  %s%s delete INDEX%s                   - Delete a contact\n", COLOR_YELLOW, progname, COLOR_RESET);
 }
 
 int main(int argc, char *argv[]) {
@@ -239,7 +251,7 @@ int main(int argc, char *argv[]) {
         list_contacts();
     } else if (strcmp(argv[1], "add") == 0) {
         if (argc < 5) {
-            printf("Error: missing arguments. Need name, email, and phone.\n");
+            printf("%sError:%s missing arguments. Need name, email, and phone.\n", COLOR_RED COLOR_BOLD, COLOR_RESET);
             print_usage(argv[0]);
         } else {
             add_contact(argv[2], argv[3], argv[4]);
@@ -247,14 +259,14 @@ int main(int argc, char *argv[]) {
         }
     } else if (strcmp(argv[1], "search") == 0) {
         if (argc < 3) {
-            printf("Error: missing search query.\n");
+            printf("%sError:%s missing search query.\n", COLOR_RED COLOR_BOLD, COLOR_RESET);
             print_usage(argv[0]);
         } else {
             search_contacts(argv[2]);
         }
     } else if (strcmp(argv[1], "update") == 0) {
         if (argc < 6) {
-            printf("Error: missing arguments. Need index, name, email, and phone.\n");
+            printf("%sError:%s missing arguments. Need index, name, email, and phone.\n", COLOR_RED COLOR_BOLD, COLOR_RESET);
             print_usage(argv[0]);
         } else {
             int index = atoi(argv[2]);
@@ -263,7 +275,7 @@ int main(int argc, char *argv[]) {
         }
     } else if (strcmp(argv[1], "delete") == 0) {
         if (argc < 3) {
-            printf("Error: missing contact number.\n");
+            printf("%sError:%s missing contact number.\n", COLOR_RED COLOR_BOLD, COLOR_RESET);
             print_usage(argv[0]);
         } else {
             int index = atoi(argv[2]);
@@ -271,7 +283,7 @@ int main(int argc, char *argv[]) {
             save_contacts();
         }
     } else {
-        printf("Unknown command: %s\n", argv[1]);
+        printf("%sError:%s Unknown command: %s%s%s\n", COLOR_RED COLOR_BOLD, COLOR_RESET, COLOR_YELLOW, argv[1], COLOR_RESET);
         print_usage(argv[0]);
         free_contacts();
         return 1;
