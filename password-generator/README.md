@@ -16,8 +16,21 @@ A command-line password generator written in C. This project demonstrates:
 
 ## Building
 
+### Using Make (Recommended)
+```bash
+make
+```
+
+### Using GCC directly
 ```bash
 gcc -Wall -Wextra main.c -o password
+```
+
+### Other Make targets
+```bash
+make clean    # Remove compiled binaries
+make rebuild  # Clean and rebuild
+make help     # Show available targets
 ```
 
 ## Usage

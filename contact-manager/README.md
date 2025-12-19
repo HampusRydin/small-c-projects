@@ -18,8 +18,21 @@ A command-line contact management system written in C. This project demonstrates
 
 ## Building
 
+### Using Make (Recommended)
 ```bash
-gcc -o contact main.c
+make
+```
+
+### Using GCC directly
+```bash
+gcc -Wall -Wextra -o contact main.c
+```
+
+### Other Make targets
+```bash
+make clean    # Remove compiled binaries
+make rebuild  # Clean and rebuild
+make help     # Show available targets
 ```
 
 ## Usage

@@ -1,2 +1,0 @@
-1 Learn C programming
-0 Build projects
