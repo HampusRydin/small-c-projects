@@ -1,1 +1,7 @@
+# Data files
 tasks.txt
+
+# Compiled binaries
+todo
+*.exe
+*.out

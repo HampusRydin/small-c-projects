@@ -1,2 +1,8 @@
+# Data files
 contacts.txt
+contact.txt
 
+# Compiled binaries
+contact
+*.exe
+*.out
