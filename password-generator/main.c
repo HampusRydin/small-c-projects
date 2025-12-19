@@ -8,6 +8,18 @@
 #define MAX_LENGTH 128
 #define DEFAULT_LENGTH 16
 
+// ANSI color codes
+#define COLOR_RESET   "\033[0m"
+#define COLOR_RED     "\033[31m"
+#define COLOR_GREEN   "\033[32m"
+#define COLOR_YELLOW  "\033[33m"
+#define COLOR_BLUE     "\033[34m"
+#define COLOR_MAGENTA "\033[35m"
+#define COLOR_CYAN    "\033[36m"
+#define COLOR_BOLD    "\033[1m"
+#define COLOR_BRIGHT_GREEN "\033[92m"
+#define COLOR_BRIGHT_YELLOW "\033[93m"
+
 const char LOWERCASE[] = "abcdefghijklmnopqrstuvwxyz";
 const char UPPERCASE[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const char DIGITS[] = "0123456789";
@@ -62,7 +74,7 @@ void generate_password(const PasswordConfig *config, char *password) {
     build_charset(config, charset, &charset_len);
 
     if (charset_len == 0) {
-        strcpy(password, "ERROR: No character set selected");
+        strcpy(password, "");
         return;
     }
 
@@ -81,24 +93,24 @@ int parse_length(const char *str) {
 }
 
 void print_usage(const char *progname) {
-    printf("Usage:\n");
-    printf("  %s [OPTIONS]\n\n", progname);
-    printf("Options:\n");
-    printf("  -l, --length N        Password length (default: %d, min: %d, max: %d)\n", DEFAULT_LENGTH, MIN_LENGTH, MAX_LENGTH);
-    printf("  -u, --uppercase       Include uppercase letters (default: yes)\n");
-    printf("  -L, --no-uppercase    Exclude uppercase letters\n");
-    printf("  -d, --digits          Include digits (default: yes)\n");
-    printf("  -D, --no-digits       Exclude digits\n");
-    printf("  -s, --symbols         Include symbols (default: yes)\n");
-    printf("  -S, --no-symbols      Exclude symbols\n");
-    printf("  -a, --all             Include all character types (default)\n");
-    printf("  -n, --numbers-only    Generate numeric password only\n");
-    printf("  -h, --help            Show this help message\n\n");
-    printf("Examples:\n");
-    printf("  %s                    Generate a %d-character password with all character types\n", progname, DEFAULT_LENGTH);
-    printf("  %s -l 20              Generate a 20-character password\n", progname);
-    printf("  %s -l 12 -S          Generate a 12-character password without symbols\n", progname);
-    printf("  %s -n -l 6            Generate a 6-digit numeric PIN\n", progname);
+    printf("%sUsage:%s\n", COLOR_BOLD COLOR_CYAN, COLOR_RESET);
+    printf("  %s%s [OPTIONS]%s\n\n", COLOR_YELLOW, progname, COLOR_RESET);
+    printf("%sOptions:%s\n", COLOR_BOLD, COLOR_RESET);
+    printf("  %s-l, --length N%s        Password length (default: %s%d%s, min: %s%d%s, max: %s%d%s)\n", COLOR_CYAN, COLOR_RESET, COLOR_YELLOW, DEFAULT_LENGTH, COLOR_RESET, COLOR_YELLOW, MIN_LENGTH, COLOR_RESET, COLOR_YELLOW, MAX_LENGTH, COLOR_RESET);
+    printf("  %s-u, --uppercase%s       Include uppercase letters (default: yes)\n", COLOR_CYAN, COLOR_RESET);
+    printf("  %s-L, --no-uppercase%s    Exclude uppercase letters\n", COLOR_CYAN, COLOR_RESET);
+    printf("  %s-d, --digits%s          Include digits (default: yes)\n", COLOR_CYAN, COLOR_RESET);
+    printf("  %s-D, --no-digits%s       Exclude digits\n", COLOR_CYAN, COLOR_RESET);
+    printf("  %s-s, --symbols%s         Include symbols (default: yes)\n", COLOR_CYAN, COLOR_RESET);
+    printf("  %s-S, --no-symbols%s      Exclude symbols\n", COLOR_CYAN, COLOR_RESET);
+    printf("  %s-a, --all%s             Include all character types (default)\n", COLOR_CYAN, COLOR_RESET);
+    printf("  %s-n, --numbers-only%s    Generate numeric password only\n", COLOR_CYAN, COLOR_RESET);
+    printf("  %s-h, --help%s            Show this help message\n\n", COLOR_CYAN, COLOR_RESET);
+    printf("%sExamples:%s\n", COLOR_BOLD, COLOR_RESET);
+    printf("  %s%s%s                    Generate a %s%d%s-character password with all character types\n", COLOR_YELLOW, progname, COLOR_RESET, COLOR_YELLOW, DEFAULT_LENGTH, COLOR_RESET);
+    printf("  %s%s -l 20%s              Generate a 20-character password\n", COLOR_YELLOW, progname, COLOR_RESET);
+    printf("  %s%s -l 12 -S%s          Generate a 12-character password without symbols\n", COLOR_YELLOW, progname, COLOR_RESET);
+    printf("  %s%s -n -l 6%s            Generate a 6-digit numeric PIN\n", COLOR_YELLOW, progname, COLOR_RESET);
 }
 
 int parse_args(int argc, char *argv[], PasswordConfig *config) {
@@ -114,12 +126,12 @@ int parse_args(int argc, char *argv[], PasswordConfig *config) {
             return 0; // Signal to show help
         } else if (strcmp(argv[i], "-l") == 0 || strcmp(argv[i], "--length") == 0) {
             if (i + 1 >= argc) {
-                printf("Error: -l/--length requires a value\n");
+                printf("%sError:%s -l/--length requires a value\n", COLOR_RED COLOR_BOLD, COLOR_RESET);
                 return -1;
             }
             int len = parse_length(argv[++i]);
             if (len == -1) {
-                printf("Error: Length must be between %d and %d\n", MIN_LENGTH, MAX_LENGTH);
+                printf("%sError:%s Length must be between %s%d%s and %s%d%s\n", COLOR_RED COLOR_BOLD, COLOR_RESET, COLOR_YELLOW, MIN_LENGTH, COLOR_RESET, COLOR_YELLOW, MAX_LENGTH, COLOR_RESET);
                 return -1;
             }
             config->length = len;
@@ -146,7 +158,7 @@ int parse_args(int argc, char *argv[], PasswordConfig *config) {
             config->use_digits = 1;
             config->use_symbols = 0;
         } else {
-            printf("Error: Unknown option '%s'\n", argv[i]);
+            printf("%sError:%s Unknown option '%s%s%s'\n", COLOR_RED COLOR_BOLD, COLOR_RESET, COLOR_YELLOW, argv[i], COLOR_RESET);
             return -1;
         }
     }
@@ -170,7 +182,13 @@ int main(int argc, char *argv[]) {
     init_random();
     generate_password(&config, password);
 
-    printf("%s\n", password);
+    if (strlen(password) == 0) {
+        printf("%sError:%s No character set selected. Please enable at least one character type.\n", COLOR_RED COLOR_BOLD, COLOR_RESET);
+        return 1;
+    }
+
+    // Color the password with alternating colors for better visibility
+    printf("%s%s%s%s\n", COLOR_BOLD COLOR_BRIGHT_GREEN, password, COLOR_RESET, COLOR_RESET);
 
     return 0;
 }
