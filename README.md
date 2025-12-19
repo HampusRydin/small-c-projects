@@ -29,6 +29,11 @@ A simple command-line todo list manager to track tasks with completion status.
 
 **Concepts:** Arrays, file I/O, command-line arguments, structs
 
+### 🗄️ [Key-Value Store](key-value-store/)
+A persistent key-value store implementation using hash tables with collision handling and binary file storage.
+
+**Concepts:** Hash tables, hash functions, collision resolution (chaining), binary file I/O, data structures
+
 ## Features
 
 All projects include:
@@ -51,6 +56,9 @@ cd password-generator && make
 
 # Todo CLI
 cd todo-cli && make
+
+# Key-Value Store
+cd key-value-store && make
 ```
 
 ### Using GCC directly
@@ -66,6 +74,10 @@ gcc -Wall -Wextra main.c -o password
 # Todo CLI
 cd todo-cli
 gcc -Wall -Wextra main.c -o todo
+
+# Key-Value Store
+cd key-value-store
+gcc -Wall -Wextra -std=c11 main.c -o kvstore
 ```
 
 ### Make targets available in all projects

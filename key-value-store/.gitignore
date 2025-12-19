@@ -1,0 +1,8 @@
+# Data files
+kvstore.dat
+
+# Compiled binaries
+kvstore
+*.exe
+*.out
+
