@@ -79,7 +79,7 @@ make help     # Show available targets
 ./kvstore list
 
 # Update a value (just set it again)
-./kvstore set role "senior developer"
+./kvstore set role "junior developer"
 
 # Remove an entry
 ./kvstore delete email

@@ -86,6 +86,10 @@ gcc -Wall -Wextra -std=c11 main.c -o kvstore
 - `make rebuild` - Clean and rebuild
 - `make help` - Show available targets
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ## Contributing
 
 These are learning projects. Feel free to fork, modify, and experiment!
