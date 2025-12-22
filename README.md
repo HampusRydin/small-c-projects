@@ -34,6 +34,11 @@ A persistent key-value store implementation using hash tables with collision han
 
 **Concepts:** Hash tables, hash functions, collision resolution (chaining), binary file I/O, data structures
 
+### 🌐 [HTTP Server](http-server/)
+A simple HTTP/1.1 server implementation using POSIX sockets with static file serving capabilities.
+
+**Concepts:** Socket programming, network protocols, HTTP parsing, system calls, file I/O over network
+
 ## Features
 
 All projects include:
@@ -59,6 +64,9 @@ cd todo-cli && make
 
 # Key-Value Store
 cd key-value-store && make
+
+# HTTP Server
+cd http-server && make
 ```
 
 ### Using GCC directly
@@ -78,6 +86,10 @@ gcc -Wall -Wextra main.c -o todo
 # Key-Value Store
 cd key-value-store
 gcc -Wall -Wextra -std=c11 main.c -o kvstore
+
+# HTTP Server
+cd http-server
+gcc -Wall -Wextra -std=c11 main.c -o http-server
 ```
 
 ### Make targets available in all projects

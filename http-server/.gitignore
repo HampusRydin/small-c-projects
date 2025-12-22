@@ -1,0 +1,10 @@
+# Compiled binaries
+http-server
+*.exe
+*.out
+
+# Test files (optional - you may want to keep index.html)
+# *.html
+# *.css
+# *.js
+
