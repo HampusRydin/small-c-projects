@@ -1,6 +1,6 @@
 # HTTP Server
 
-A simple HTTP/1.1 server implementation in C using POSIX sockets. This project demonstrates:
+A simple HTTP/1.1 server implementation in C using POSIX sockets. Covers:
 - Socket programming and network communication
 - HTTP protocol parsing and response generation
 - File serving capabilities
@@ -18,7 +18,7 @@ A simple HTTP/1.1 server implementation in C using POSIX sockets. This project d
 
 ## Building
 
-### Using Make (Recommended)
+### Using Make
 ```bash
 make
 ```
@@ -121,9 +121,9 @@ The server automatically detects MIME types for:
 
 ## Platform Support
 
-- ✅ macOS (tested)
-- ✅ Linux (should work)
-- ⚠️ Windows (requires WSL or MinGW with socket support)
+- macOS (tested)
+- Linux (should work)
+- Windows (requires WSL or MinGW with socket support)
 
 ## Example Output
 
@@ -139,7 +139,7 @@ Press Ctrl+C to stop the server
 [GET] /index.html HTTP/1.1
 ```
 
-## Next Steps (Future Enhancements)
+## Future Enhancements
 
 - Multi-threading for concurrent requests
 - POST/PUT/DELETE method support

@@ -1,6 +1,6 @@
 # Contact Manager
 
-A command-line contact management system written in C. This project demonstrates:
+A command-line contact management system written in C. Covers:
 - Linked list data structures
 - File I/O operations
 - CRUD (Create, Read, Update, Delete) operations
@@ -18,7 +18,7 @@ A command-line contact management system written in C. This project demonstrates
 
 ## Building
 
-### Using Make (Recommended)
+### Using Make
 ```bash
 make
 ```

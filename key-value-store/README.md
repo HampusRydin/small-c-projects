@@ -1,6 +1,6 @@
 # Key-Value Store
 
-A persistent key-value store implementation in C using hash tables. This project demonstrates:
+A persistent key-value store implementation in C using hash tables. Covers:
 - Hash table data structure with collision handling
 - Hash function implementation (djb2 algorithm)
 - Persistent storage with binary file I/O
@@ -19,7 +19,7 @@ A persistent key-value store implementation in C using hash tables. This project
 
 ## Building
 
-### Using Make (Recommended)
+### Using Make
 ```bash
 make
 ```

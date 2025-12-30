@@ -1,6 +1,6 @@
 # Password Generator
 
-A command-line password generator written in C. This project demonstrates:
+A command-line password generator written in C. Covers:
 - Random number generation
 - String manipulation and character set building
 - Command-line argument parsing
@@ -16,7 +16,7 @@ A command-line password generator written in C. This project demonstrates:
 
 ## Building
 
-### Using Make (Recommended)
+### Using Make
 ```bash
 make
 ```

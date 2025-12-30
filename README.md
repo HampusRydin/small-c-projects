@@ -10,48 +10,40 @@ Each directory is a standalone project focusing on specific topics such as:
 - file I/O
 - CLI tools
 
-The projects are intentionally small and focused.
+The projects are small and focused.
 
 ## Projects
 
-### 📇 [Contact Manager](contact-manager/)
+### [Contact Manager](contact-manager/)
 A command-line contact management system with CRUD operations, search functionality, and persistent storage using linked lists.
 
 **Concepts:** Linked lists, dynamic memory, file I/O, string manipulation
 
-### 🔐 [Password Generator](password-generator/)
+### [Password Generator](password-generator/)
 Generate secure passwords with customizable length and character sets (uppercase, lowercase, digits, symbols).
 
 **Concepts:** Random number generation, string manipulation, command-line parsing, structures
 
-### ✅ [Todo CLI](todo-cli/)
+### [Todo CLI](todo-cli/)
 A simple command-line todo list manager to track tasks with completion status.
 
 **Concepts:** Arrays, file I/O, command-line arguments, structs
 
-### 🗄️ [Key-Value Store](key-value-store/)
+### [Key-Value Store](key-value-store/)
 A persistent key-value store implementation using hash tables with collision handling and binary file storage.
 
 **Concepts:** Hash tables, hash functions, collision resolution (chaining), binary file I/O, data structures
 
-### 🌐 [HTTP Server](http-server/)
+### [HTTP Server](http-server/)
 A simple HTTP/1.1 server implementation using POSIX sockets with static file serving capabilities.
 
 **Concepts:** Socket programming, network protocols, HTTP parsing, system calls, file I/O over network
 
-## Features
-
-All projects include:
-- ✨ **Colorful output** - ANSI color codes for better readability
-- 🔧 **Cross-platform** - Works on macOS, Linux, and Windows
-- 📝 **Well-documented** - Each project has its own README with examples
-- 🎯 **Focused scope** - Small, manageable projects perfect for learning
-
 ## Building
 
-Each project can be built independently using Make (recommended) or GCC directly:
+Each project can be built independently using Make or GCC directly:
 
-### Using Make (Recommended)
+### Using Make
 ```bash
 # Contact Manager
 cd contact-manager && make
